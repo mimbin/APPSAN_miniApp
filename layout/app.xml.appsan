@@ -1,3 +1,4 @@
 <page title="Appsan Project">
-<text>Hello World, GP9</text>
-<include layout="app.js.appsan"/></page>
+    <text>Hello World, GP9</text>
+    <include layout="app.js.appsan"/>
+</page>
