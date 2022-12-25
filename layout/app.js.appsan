@@ -1,3 +1,18 @@
 <script id="main-script">
- function init() {}
+    function get_data() {
+        Appsan.setProperty('frame', 'innerElements',
+            '<progressbar/>');
+        HTTPClient.get("http://run-dev.integropia.com/api/UserSelect?apikey=b62b747ad5315bd248481650aa423389", null)
+            .subscribe(res => {
+                var data = "";
+                for(var i in res){
+                    data += "<card><text>" + res[i].Username + "</text></card>";
+                }
+                Appsan.setProperty('frame', 'innerElements',
+                    data);
+            }, error => {
+                Appsan.setProperty('frame', 'innerElements',
+                    '<button text="retry" onclick="script/main-script:get_data()"/>');
+            });
+    }
 </script>

@@ -1,11 +1,6 @@
 <page title="Appsan Project">
-    <text>Hello World, GP9</text>
-    <footer background="#000000">
-        <frame layout="linear_vertical">
-            <text textColor="#FFFFFF">footer</text>
-            <text textColor="#FFFFFF">asdasdasdasd</text>
-            <text textColor="#FFFFFF">asdasdasdasd</text>
-        </frame>
-    </footer>
+    <frame layout="linear_vertical" id="frame">
+    </frame>
+    <button text="get data" onclick="script/main-script:get_data()"/>
     <include layout="app.js.appsan"/>
 </page>
