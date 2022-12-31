@@ -1,6 +1,5 @@
 <page title="Appsan Project">
-    <frame layout="linear_vertical" id="frame">
+    <frame layout="linear_vertical" id="the_frame">
     </frame>
-    <button text="get data" onclick="script/main-script:get_data()"/>
     <include layout="app.js.appsan"/>
 </page>

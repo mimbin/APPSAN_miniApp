@@ -1,18 +1,24 @@
 <script id="main-script">
+
+    get_data();
+
     function get_data() {
-        Appsan.setProperty('frame', 'innerElements',
+        Appsan.setProperty('the_frame', 'innerElements',
             '<progressbar/>');
-        HTTPClient.get("http://run-dev.integropia.com/api/UserSelect?apikey=b62b747ad5315bd248481650aa423389", null)
+        HTTPClient.get("http://run-dev.integropia.com/api/CourseSelect?apikey=b62b747ad5315bd248481650aa423389", null)
             .subscribe(res => {
                 var data = "";
                 for(var i in res){
-                    data += "<card><text>" + res[i].Username + "</text></card>";
+                    data += '<frame background="#346beb" onclick="script/main-script:test('+res[i].Code+')"><text textcolor="white">' + res[i].Title + '</text></frame>';
                 }
-                Appsan.setProperty('frame', 'innerElements',
+                Appsan.setProperty('the_frame', 'innerElements',
                     data);
             }, error => {
-                Appsan.setProperty('frame', 'innerElements',
+                Appsan.setProperty('the_frame', 'innerElements',
                     '<button text="retry" onclick="script/main-script:get_data()"/>');
             });
+    }
+    function test(code){
+        console.log("clicked: "+code);
     }
 </script>
