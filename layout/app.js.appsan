@@ -20,5 +20,11 @@
     }
     function course_page(code){
         Appsan.runAction("page/course_page");
+        // Appsan.runAction("script/main-script:load_course("+code+")");
+        load_course(code);
+    }
+    function load_course(code){
+        Appsan.setProperty('text_tag', 'innerElements',
+            "code " + code + " received");
     }
 </script>

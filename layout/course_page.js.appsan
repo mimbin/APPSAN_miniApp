@@ -1,0 +1,6 @@
+<script id="course-script">
+    function load_course(code){
+        Appsan.setProperty('text_tag', 'innerElements',
+            "code " + code + " received");
+    }
+</script>

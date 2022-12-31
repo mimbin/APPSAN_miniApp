@@ -1,3 +1,5 @@
 <page id="course_page">
-    <text>course page!</text>
+    <text id="text_tag">course page!</text>
+    
+    <include layout="course_page.js.appsan"/>
 </page>
