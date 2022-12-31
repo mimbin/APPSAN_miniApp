@@ -1,5 +1,7 @@
-<page title="Appsan Project">
+<page title="Appsan Project" id="main_page">
     <frame layout="linear_vertical" id="the_frame">
     </frame>
     <include layout="app.js.appsan"/>
 </page>
+
+<include layout="course_page.xml.appsan"/>

@@ -9,7 +9,7 @@
             .subscribe(res => {
                 var data = "";
                 for(var i in res){
-                    data += '<frame background="#346beb" onclick="script/main-script:test('+res[i].Code+')"><text textcolor="white">' + res[i].Title + '</text></frame>';
+                    data += '<frame background="#346beb" onclick="script/main-script:course_page('+res[i].Code+')"><text textcolor="white">' + res[i].Title + '</text></frame>';
                 }
                 Appsan.setProperty('the_frame', 'innerElements',
                     data);
@@ -18,7 +18,7 @@
                     '<button text="retry" onclick="script/main-script:get_data()"/>');
             });
     }
-    function test(code){
-        console.log("clicked: "+code);
+    function course_page(code){
+        Appsan.runAction("page/course_page");
     }
 </script>
