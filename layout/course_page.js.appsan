@@ -1,7 +1,24 @@
 <script id="course_script">
+
+    load_course(Appsan.getVariable("course_code").value);
+
     function load_course(code){
         Appsan.setProperty('course_frame', 'innerElements',
-            '<text>' + code + '</text>');
+            '<progressbar/>');
+        HTTPClient.post("http://run-dev.integropia.com/api/CourseSelectCode?apikey=b62b747ad5315bd248481650aa423389",
+            {"Code": code}, {headers: {'Content-Type': 'application/json'}})
+            .subscribe(res => {
+                console.log(res);
+                Appsan.setProperty('course_frame', 'innerElements',
+                    '<text>Title: ' + res[0].Title + '</text>' +
+                    '<text>Topic: ' + res[0].Topic + '</text>' +
+                    '<text>Teacher: ' + res[0].Teacher + '</text>' +
+                    '<text>Cost: ' + res[0].Cost + '</text>' +
+                    '<text>Location: ' + res[0].Location + '</text>' +
+                    '<text>Date: ' + res[0].Date + '</text>');
+            }, error => {
+                Appsan.setProperty('course_frame', 'innerElements',
+                    '<button text="retry" onclick="script/course_script:load_course('+code+')"/>');
+            });
     }
-    load_course(Appsan.getVariable("course_code").value);
 </script>

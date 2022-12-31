@@ -1,5 +1,6 @@
 <script id="main_script">
 
+    get_user_ID();
     get_data();
 
     function get_data() {
@@ -21,5 +22,22 @@
     function course_page(code){
         Appsan.runAction("page/course_page");
         Appsan.setVariable("course_code", code);
+    }
+    function get_user_ID(){
+        var user_str = Appsan.getBind('user/identifier');
+        HTTPClient.post("http://run-dev.integropia.com/api/UserSelectID?apikey=b62b747ad5315bd248481650aa423389",
+            {"ID": user_str}, {headers: {'Content-Type': 'application/json'}})
+            .subscribe(res => {
+                if(res.length < 1){
+                    // add user
+                    Appsan.setVariable("user_id", "0020022002");
+                }
+                else{
+                    Appsan.setVariable("user_id", user_str);
+                }
+            }, error => {
+                console.log("***failed getting user data***");
+                get_user_ID();
+            });
     }
 </script>

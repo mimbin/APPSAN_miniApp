@@ -1,6 +1,6 @@
 <page id="course_page">
-    <frame layout="linear_vertical" id="course_frame">
-        <text id="text_tag">course page!</text>
+    <frame layout="linear_vertical" id="course_frame" background="#a5ebf0">
+        <text>course page!</text>
     </frame>
 
     <include layout="course_page.js.appsan"/>
