@@ -1,6 +1,7 @@
-<script id="course-script">
+<script id="course_script">
     function load_course(code){
-        Appsan.setProperty('text_tag', 'innerElements',
-            "code " + code + " received");
+        Appsan.setProperty('course_frame', 'innerElements',
+            '<text>' + code + '</text>');
     }
+    load_course(Appsan.getVariable("course_code").value);
 </script>

@@ -1,4 +1,4 @@
-<script id="main-script">
+<script id="main_script">
 
     get_data();
 
@@ -9,22 +9,17 @@
             .subscribe(res => {
                 var data = "";
                 for(var i in res){
-                    data += '<frame background="#346beb" onclick="script/main-script:course_page('+res[i].Code+')"><text textcolor="white">' + res[i].Title + '</text></frame>';
+                    data += '<frame background="#346beb" onclick="script/main_script:course_page('+res[i].Code+')"><text textcolor="white">' + res[i].Title + '</text></frame>';
                 }
                 Appsan.setProperty('the_frame', 'innerElements',
                     data);
             }, error => {
                 Appsan.setProperty('the_frame', 'innerElements',
-                    '<button text="retry" onclick="script/main-script:get_data()"/>');
+                    '<button text="retry" onclick="script/main_script:get_data()"/>');
             });
     }
     function course_page(code){
         Appsan.runAction("page/course_page");
-        // Appsan.runAction("script/main-script:load_course("+code+")");
-        load_course(code);
-    }
-    function load_course(code){
-        Appsan.setProperty('text_tag', 'innerElements',
-            "code " + code + " received");
+        Appsan.setVariable("course_code", code);
     }
 </script>
