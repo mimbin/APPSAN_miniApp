@@ -11,9 +11,25 @@
                 Appsan.setProperty('my_frame', 'innerElements',
                     '<text>Welcome ' + res[0].Name + '!</text>' +
                     '<frame layout="linear_vertical" id="my_courses_frame"><progressbar/></frame>');
+                get_courses(ID);
             }, error => {
                 console.log("***failed getting user data***");
-                load_my_data();
+                load_my_data(ID);
+            });
+    }
+    function get_courses(ID){
+        HTTPClient.post("http://run-dev.integropia.com/api/PersonCourse?apikey=b62b747ad5315bd248481650aa423389",
+            {"UserID": ID}, {headers: {'Content-Type': 'application/json'}})
+            .subscribe(res => {
+                var data = "";
+                for(var i in res){
+                    data += '<frame background="#346beb" onclick="script/main_script:course_page('+res[i].Code+')"><text textcolor="white">' + res[i].Title + '</text></frame>';
+                }
+                Appsan.setProperty('my_courses_frame', 'innerElements',
+                    data);
+            }, error => {
+                console.log("***failed getting user courses***");
+                get_courses(ID);
             });
     }
 </script>
