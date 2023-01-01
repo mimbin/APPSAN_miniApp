@@ -5,10 +5,10 @@
         HTTPClient.post("http://run-dev.integropia.com/api/UserInsertNew?apikey=b62b747ad5315bd248481650aa423389",
             {
                 "ID": user_str,
-                "Name": "name of user",
-                "Lastname": "Lastname",
-                "Address": "Address",
-                "Telephone": "None"
+                "Name": Appsan.findElementById("name").value,
+                "Lastname": Appsan.findElementById("lastname").value,
+                "Address": Appsan.findElementById("address").value,
+                "Telephone": Appsan.findElementById("telephone").value
             }, {headers: {'Content-Type': 'application/json'}})
             .subscribe(res => {
                 Appsan.setVariable("user_id", user_str);

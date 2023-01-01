@@ -1,5 +1,11 @@
 <page id="signup">
-    <button onclick="script/signup_script:submit()">sign up</button>
+    <frame layout="linear_vertical" id="signup_frame" background="#a5ebf0">
+        <textInput hint="Name" id="name"></textInput>
+        <textInput hint="Lastname" id="lastname"></textInput>
+        <textInput hint="Address" id="address"></textInput>
+        <textInput hint="Telephone" id="telephone"></textInput>
+        <button onclick="script/signup_script:submit()">sign up</button>
+    </frame>
 
     <include layout="signup.js.appsan"/>
 </page>
