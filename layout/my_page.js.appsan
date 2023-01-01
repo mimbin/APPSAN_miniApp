@@ -9,7 +9,8 @@
             {"ID": ID}, {headers: {'Content-Type': 'application/json'}})
             .subscribe(res => {
                 Appsan.setProperty('my_frame', 'innerElements',
-                    '<text>' + res[0].Name + '</text>');
+                    '<text>Welcome ' + res[0].Name + '!</text>' +
+                    '<frame layout="linear_vertical" id="my_courses_frame"><progressbar/></frame>');
             }, error => {
                 console.log("***failed getting user data***");
                 load_my_data();

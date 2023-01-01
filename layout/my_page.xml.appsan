@@ -1,6 +1,6 @@
 <page id="my_page">
     <frame layout="linear_vertical" id="my_frame" background="#a5ebf0">
-        <text>my page!</text>
+        <progressbar/>
     </frame>
 
     <include layout="my_page.js.appsan"/>
