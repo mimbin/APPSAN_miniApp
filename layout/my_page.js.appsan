@@ -1,2 +1,18 @@
 <script id="my_script">
+
+    load_my_data(Appsan.getVariable("user_id").value)
+
+    function load_my_data(ID){
+        Appsan.setProperty('my_frame', 'innerElements',
+            '<progressbar/>');
+        HTTPClient.post("http://run-dev.integropia.com/api/UserSelectID?apikey=b62b747ad5315bd248481650aa423389",
+            {"ID": ID}, {headers: {'Content-Type': 'application/json'}})
+            .subscribe(res => {
+                Appsan.setProperty('my_frame', 'innerElements',
+                    '<text>' + res[0].Username + '</text>');
+            }, error => {
+                console.log("***failed getting user data***");
+                load_my_data();
+            });
+    }
 </script>

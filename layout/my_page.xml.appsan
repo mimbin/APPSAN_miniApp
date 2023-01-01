@@ -3,5 +3,5 @@
         <text>my page!</text>
     </frame>
 
-    <include layout="course_page.js.appsan"/>
+    <include layout="my_page.js.appsan"/>
 </page>
