@@ -1,7 +1,6 @@
 <script id="main_script">
 
     get_user_ID();
-    get_data();
 
     function get_data() {
         Appsan.setProperty('the_frame', 'innerElements',
@@ -29,26 +28,11 @@
             {"ID": user_str}, {headers: {'Content-Type': 'application/json'}})
             .subscribe(res => {
                 if(res.length < 1){
-                    console.log("making user........");
-                    HTTPClient.post("http://run-dev.integropia.com/api/UserInsertNew?apikey=b62b747ad5315bd248481650aa423389",
-                        {
-                            "ID": user_str,
-                            "Name": "name of user",
-                            "Lastname": "Lastname",
-                            "Address": "Address",
-                            "Telephone": "None"
-                        }, {headers: {'Content-Type': 'application/json'}})
-                        .subscribe(res => {
-                            Appsan.setVariable("user_id", user_str);
-                        }, error => {
-                            console.log("***failed making user***");
-                            console.log(err);
-                            get_user_ID();
-                        });
-                    Appsan.setVariable("user_id", "0020022002");
+                    Appsan.runAction("page/signup");
                 }
                 else{
                     Appsan.setVariable("user_id", user_str);
+                    get_data();
                 }
             }, error => {
                 console.log("***failed getting user data***");
