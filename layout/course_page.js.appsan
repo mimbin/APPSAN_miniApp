@@ -37,6 +37,7 @@
                                 '<text>Date: ' + res[0].Date + '</text>' +
                                 '<button textcolor="white" background="#3bba32" onclick="script/course_script:add_course('+code+')">add course</button>');
                         }
+                        load_comments(code);
                     }, error => {
                         console.log("***failed checking user courses***");
                         Appsan.setProperty('course_frame', 'innerElements',
@@ -77,6 +78,41 @@
             }, error => {
                 console.log("***course add failed***");
                 add_course(code);
+            });
+    }
+    function load_comments(code){
+        Appsan.setProperty('comments_frame', 'innerElements',
+            '<progressbar/>');
+        HTTPClient.post("http://run-dev.integropia.com/api/CourseCommentNew?apikey=b62b747ad5315bd248481650aa423389",
+            {"CourseCode": code}, {headers: {'Content-Type': 'application/json'}})
+            .subscribe(res => {
+                var data = "";
+                for(var i in res){
+                    data += '<text>' + res[i].Text + '</text>';
+                    data += '<divider></divider>';
+                }
+                data += '<textInput hint="Comment" id="comment"></textInput>';
+                data += '<button onclick="script/course_script:add_comment('+code+')">comment</button>';
+                Appsan.setProperty('comments_frame', 'innerElements',
+                    data);
+            }, error => {
+                Appsan.setProperty('comments_frame', 'innerElements',
+                    '<button text="retry" onclick="script/course_script:load_comments('+code+')"/>');
+            });
+    }
+    function add_comment(code){
+        Appsan.setProperty('comments_frame', 'innerElements',
+            '<progressbar/>');
+        HTTPClient.post("http://run-dev.integropia.com/api/CommentInsertNew?apikey=b62b747ad5315bd248481650aa423389",
+            {
+                "Text": Appsan.findElementById("comment").value,
+                "CourseCode": code
+            }, {headers: {'Content-Type': 'application/json'}})
+            .subscribe(res => {
+                load_comments(code);
+            }, error => {
+                console.log("***comment failed***");
+                load_comments(code);
             });
     }
 </script>
