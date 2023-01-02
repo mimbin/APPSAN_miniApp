@@ -8,17 +8,75 @@
         HTTPClient.post("http://run-dev.integropia.com/api/CourseSelectCode?apikey=b62b747ad5315bd248481650aa423389",
             {"Code": code}, {headers: {'Content-Type': 'application/json'}})
             .subscribe(res => {
-                console.log(res);
-                Appsan.setProperty('course_frame', 'innerElements',
-                    '<text>Title: ' + res[0].Title + '</text>' +
-                    '<text>Topic: ' + res[0].Topic + '</text>' +
-                    '<text>Teacher: ' + res[0].Teacher + '</text>' +
-                    '<text>Cost: ' + res[0].Cost + '</text>' +
-                    '<text>Location: ' + res[0].Location + '</text>' +
-                    '<text>Date: ' + res[0].Date + '</text>');
+                var ID = Appsan.getVariable("user_id").value;
+                HTTPClient.post("http://run-dev.integropia.com/api/PersonCourse?apikey=b62b747ad5315bd248481650aa423389",
+                    {"UserID": ID}, {headers: {'Content-Type': 'application/json'}})
+                    .subscribe(courses => {
+                        var flag = true;
+                        for(var i in courses){
+                            if(courses[i].Code == code){
+                                flag = false;
+                                Appsan.setProperty('course_frame', 'innerElements',
+                                    '<text>Title: ' + res[0].Title + '</text>' +
+                                    '<text>Topic: ' + res[0].Topic + '</text>' +
+                                    '<text>Teacher: ' + res[0].Teacher + '</text>' +
+                                    '<text>Cost: ' + res[0].Cost + '</text>' +
+                                    '<text>Location: ' + res[0].Location + '</text>' +
+                                    '<text>Date: ' + res[0].Date + '</text>' +
+                                    '<button textcolor="white" background="#ba3232" onclick="script/course_script:remove_course('+code+')">remove course</button>');
+                                break;
+                            }
+                        }
+                        if(flag){
+                            Appsan.setProperty('course_frame', 'innerElements',
+                                '<text>Title: ' + res[0].Title + '</text>' +
+                                '<text>Topic: ' + res[0].Topic + '</text>' +
+                                '<text>Teacher: ' + res[0].Teacher + '</text>' +
+                                '<text>Cost: ' + res[0].Cost + '</text>' +
+                                '<text>Location: ' + res[0].Location + '</text>' +
+                                '<text>Date: ' + res[0].Date + '</text>' +
+                                '<button textcolor="white" background="#3bba32" onclick="script/course_script:add_course('+code+')">add course</button>');
+                        }
+                    }, error => {
+                        console.log("***failed checking user courses***");
+                        Appsan.setProperty('course_frame', 'innerElements',
+                            '<button text="retry" onclick="script/course_script:load_course('+code+')"/>');
+                    });
             }, error => {
                 Appsan.setProperty('course_frame', 'innerElements',
                     '<button text="retry" onclick="script/course_script:load_course('+code+')"/>');
+            });
+    }
+    function remove_course(code){
+        Appsan.setProperty('course_frame', 'innerElements',
+            '<progressbar/>');
+        var ID = Appsan.getVariable("user_id").value;
+        HTTPClient.post("http://run-dev.integropia.com/api/CourseUserDelete?apikey=b62b747ad5315bd248481650aa423389",
+            {
+                "UserID": ID,
+                "CourseCode": code
+            }, {headers: {'Content-Type': 'application/json'}})
+            .subscribe(res => {
+                load_course(Appsan.getVariable("course_code").value);
+            }, error => {
+                console.log("***course remove failed***");
+                remove_course(code);
+            });
+    }
+    function add_course(code){
+        Appsan.setProperty('course_frame', 'innerElements',
+            '<progressbar/>');
+        var ID = Appsan.getVariable("user_id").value;
+        HTTPClient.post("http://run-dev.integropia.com/api/CourseUserInsert?apikey=b62b747ad5315bd248481650aa423389",
+            {
+                "UserID": ID,
+                "CourseCode": code
+            }, {headers: {'Content-Type': 'application/json'}})
+            .subscribe(res => {
+                load_course(Appsan.getVariable("course_code").value);
+            }, error => {
+                console.log("***course add failed***");
+                add_course(code);
             });
     }
 </script>
