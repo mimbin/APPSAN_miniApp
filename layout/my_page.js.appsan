@@ -23,7 +23,7 @@
             .subscribe(res => {
                 var data = "";
                 for(var i in res){
-                    data += '<frame background="#346beb" onclick="script/main_script:course_page('+res[i].Code+')"><text textcolor="white">' + res[i].Title + '</text></frame>';
+                    data += '<frame background="#346beb" onclick="script/my_script:course_page('+res[i].Code+')"><text textcolor="white">' + res[i].Title + '</text></frame>';
                 }
                 Appsan.setProperty('my_courses_frame', 'innerElements',
                     data);
@@ -31,5 +31,9 @@
                 console.log("***failed getting user courses***");
                 get_courses(ID);
             });
+    }
+    function course_page(code){
+        Appsan.runAction("page/course_page");
+        Appsan.setVariable("course_code", code);
     }
 </script>
