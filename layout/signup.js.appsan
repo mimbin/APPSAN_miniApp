@@ -1,0 +1,20 @@
+<script id="signup_script">
+    function submit(){
+        var user_str = Appsan.getBind('user/identifier');
+        console.log("making user........");
+        HTTPClient.post("http://run-dev.integropia.com/api/UserInsertNew?apikey=b62b747ad5315bd248481650aa423389",
+            {
+                "ID": user_str,
+                "Name": Appsan.findElementById("name").value,
+                "Lastname": Appsan.findElementById("lastname").value,
+                "Address": Appsan.findElementById("address").value,
+                "Telephone": Appsan.findElementById("telephone").value
+            }, {headers: {'Content-Type': 'application/json'}})
+            .subscribe(res => {
+                Appsan.setVariable("user_id", user_str);
+                Appsan.runAction("page/main_page");
+            }, error => {
+                console.log("***failed making user***");
+            });
+    }
+</script>

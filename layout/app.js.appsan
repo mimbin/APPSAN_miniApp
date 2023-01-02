@@ -1,3 +1,42 @@
-<script id="main-script">
- function init() {}
+<script id="main_script">
+
+    get_user_ID();
+
+    function get_data() {
+        Appsan.setProperty('the_frame', 'innerElements',
+            '<progressbar/>');
+        HTTPClient.get("http://run-dev.integropia.com/api/CourseSelect?apikey=b62b747ad5315bd248481650aa423389", null)
+            .subscribe(res => {
+                var data = "";
+                for(var i in res){
+                    data += '<frame background="#346beb" onclick="script/main_script:course_page('+res[i].Code+')"><text textcolor="white">' + res[i].Title + '</text></frame>';
+                }
+                Appsan.setProperty('the_frame', 'innerElements',
+                    data);
+            }, error => {
+                Appsan.setProperty('the_frame', 'innerElements',
+                    '<button text="retry" onclick="script/main_script:get_data()"/>');
+            });
+    }
+    function course_page(code){
+        Appsan.runAction("page/course_page");
+        Appsan.setVariable("course_code", code);
+    }
+    function get_user_ID(){
+        var user_str = Appsan.getBind('user/identifier');
+        HTTPClient.post("http://run-dev.integropia.com/api/UserSelectID?apikey=b62b747ad5315bd248481650aa423389",
+            {"ID": user_str}, {headers: {'Content-Type': 'application/json'}})
+            .subscribe(res => {
+                if(res.length < 1){
+                    Appsan.runAction("page/signup");
+                }
+                else{
+                    Appsan.setVariable("user_id", user_str);
+                    get_data();
+                }
+            }, error => {
+                console.log("***failed getting user data***");
+                get_user_ID();
+            });
+    }
 </script>

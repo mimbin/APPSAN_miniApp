@@ -1,4 +1,11 @@
-<page title="Appsan Project">
-    <text>Hello World, GP9</text>
+<page title="Jahad Service" id="main_page">
+    <button onclick="page/my_page">my courses</button>
+    <button onclick="script/main_script:get_data()">reload</button>
+    <frame layout="linear_vertical" id="the_frame" background="#a5ebf0"><progressbar/></frame>
+
     <include layout="app.js.appsan"/>
 </page>
+
+<include layout="signup.xml.appsan"/>
+<include layout="course_page.xml.appsan"/>
+<include layout="my_page.xml.appsan"/>

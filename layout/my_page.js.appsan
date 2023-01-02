@@ -1,0 +1,39 @@
+<script id="my_script">
+
+    load_my_data(Appsan.getVariable("user_id").value)
+
+    function load_my_data(ID){
+        Appsan.setProperty('my_frame', 'innerElements',
+            '<progressbar/>');
+        HTTPClient.post("http://run-dev.integropia.com/api/UserSelectID?apikey=b62b747ad5315bd248481650aa423389",
+            {"ID": ID}, {headers: {'Content-Type': 'application/json'}})
+            .subscribe(res => {
+                Appsan.setProperty('my_frame', 'innerElements',
+                    '<text>Welcome ' + res[0].Name + '!</text>' +
+                    '<frame layout="linear_vertical" id="my_courses_frame"><progressbar/></frame>');
+                get_courses(ID);
+            }, error => {
+                console.log("***failed getting user data***");
+                load_my_data(ID);
+            });
+    }
+    function get_courses(ID){
+        HTTPClient.post("http://run-dev.integropia.com/api/PersonCourse?apikey=b62b747ad5315bd248481650aa423389",
+            {"UserID": ID}, {headers: {'Content-Type': 'application/json'}})
+            .subscribe(res => {
+                var data = "";
+                for(var i in res){
+                    data += '<frame background="#346beb" onclick="script/my_script:course_page('+res[i].Code+')"><text textcolor="white">' + res[i].Title + '</text></frame>';
+                }
+                Appsan.setProperty('my_courses_frame', 'innerElements',
+                    data);
+            }, error => {
+                console.log("***failed getting user courses***");
+                get_courses(ID);
+            });
+    }
+    function course_page(code){
+        Appsan.runAction("page/course_page");
+        Appsan.setVariable("course_code", code);
+    }
+</script>

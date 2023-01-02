@@ -1,0 +1,7 @@
+<page id="my_page">
+    <frame layout="linear_vertical" id="my_frame" background="#a5ebf0">
+        <progressbar/>
+    </frame>
+
+    <include layout="my_page.js.appsan"/>
+</page>

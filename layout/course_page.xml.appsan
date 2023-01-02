@@ -1,0 +1,8 @@
+<page id="course_page">
+    <frame layout="linear_vertical" id="course_frame" background="#a5ebf0">
+        <text>course page!</text>
+    </frame>
+    <frame layout="linear_vertical" id="comments_frame" background="#a5ebf0"></frame>
+
+    <include layout="course_page.js.appsan"/>
+</page>
